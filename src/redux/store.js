@@ -50,7 +50,7 @@ function* fetchOneMovieDetails(id) {
   try {
     const detailsResponse = yield axios.get(`/api/movies/${id}`);
     yield put({
-      type:'SET_MOVIES',
+      type:'SET_ONE_MOVIE',
       payload:detailsResponse.data
     });
   } catch (err) {
@@ -83,6 +83,15 @@ const movies = (state = [], action) => {
   }
 }
 
+const oneMovie = (state = {}, action) => {
+  switch(action.type) {
+    case 'SET_ONE_MOVIE':
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 // Used to store the movie genres
 const genres = (state = [], action) => {
   switch (action.type) {
@@ -98,6 +107,7 @@ const storeInstance = createStore(
   combineReducers({
     movies,
     genres,
+    oneMovie
   }),
   // Add sagaMiddleware to our store
   applyMiddleware(sagaMiddleware, logger),

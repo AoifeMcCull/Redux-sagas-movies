@@ -8,7 +8,7 @@ function MovieDetails() {
     const dispatch = useDispatch();
     const history = useHistory();
     const genres = useSelector(store => store.genres)
-    const movies = useSelector(store => store.movies)
+    const oneMovie = useSelector(store => store.oneMovie)
     useEffect(() => {
         dispatch({ 
             type: 'FETCH_ONE_MOVIE_GENRES',
@@ -20,19 +20,22 @@ function MovieDetails() {
         })
       }, []);
 
+    const backToList = () => {
+        dispatch({
+            type:'SET_ONE_MOVIE',
+            payload: {}
+        })
+        history.push('/')
+    }
+
     return(
         <div data-testid = 'movieDetails'>
             <section className= 'detailsList'>
-                {movies.map(movie => {
-                    return(
-                        <div key={movie.id}>
-                            <p className='movieTitle'>{movie.title}</p>
-                            <img className='moviePoster' src={movie.poster}></img>
-                            <p className='movieDescription'>{movie.description}</p>
-                        </div>
-                    
-                )
-                })}
+                <div key={oneMovie.id}>
+                    <p className='movieTitle'>{oneMovie.title}</p>
+                    <img className='moviePoster' src={oneMovie.poster}></img>
+                    <p className='movieDescription'>{oneMovie.description}</p>
+                </div>
             </section>
             <section className='genresList'>
                 <h2>Genres</h2>
@@ -45,7 +48,7 @@ function MovieDetails() {
                 })}
             </section>
             <button data-testid='toList'
-            onClick={() => history.push('/')}
+            onClick={backToList}
             >
                 Back
             </button>

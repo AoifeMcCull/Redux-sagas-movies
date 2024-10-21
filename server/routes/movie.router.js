@@ -26,7 +26,8 @@ router.get('/:id', (req, res) => {
     `;
     pool.query(query)
     .then(result => {
-      res.send(result.rows);
+      const resultMovie = result.rows[0]
+      res.send(resultMovie);
     })
     .catch(err => {
       console.log('ERROR: Get all details for id',id, err);
