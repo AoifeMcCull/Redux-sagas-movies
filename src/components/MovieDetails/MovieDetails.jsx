@@ -1,10 +1,12 @@
 import react, {useEffect} from 'react'
 import { useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 //show movie title, poster, description, and all genres
 function MovieDetails() {
     const id = useParams();
     const dispatch = useDispatch();
+    const history = useHistory();
     const genres = useSelector(store => store.genres)
     const movies = useSelector(store => store.movies)
     useEffect(() => {
@@ -19,7 +21,7 @@ function MovieDetails() {
       }, []);
 
     return(
-        <div>
+        <div data-testid = 'movieDetails'>
             <section className= 'detailsList'>
                 {movies.map(movie => {
                     return(
@@ -42,6 +44,11 @@ function MovieDetails() {
                     )
                 })}
             </section>
+            <button data-testid='toList'
+            onClick={() => history.push('/')}
+            >
+                Back
+            </button>
         </div>
     )
         
